@@ -14,7 +14,7 @@ public class ManagerFileImp implements ModelInterface {
     }
 
     @Override
-    public void addProduct(String description, double price, String unit) {
+    public void addProduct(String description, int price, String unit) {
         AddProductAction addAction = new AddProductAction(productList);
         addAction.execute(description, price, unit);
     }

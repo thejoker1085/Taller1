@@ -11,30 +11,23 @@ public class DeleteProductAction {
     }
 
     public String execute(String searchTerm) {
-        int deletedCount = deleteProductsByName(searchTerm);
+        if (searchTerm == null) {
+            return "Término de búsqueda vacío";
+        }
+        String normalized = searchTerm.trim().toLowerCase();
+        int deletedCount = deleteProductsByName(normalized);
         return buildDeleteMessage(searchTerm, deletedCount);
     }
 
     private int deleteProductsByName(String searchTerm) {
         int count = 0;
-        while (shouldDeleteFirst(searchTerm)) {
+        while (list.getHead() != null && containsIgnoreCase(list.getHead().getProduct().getDescription(), searchTerm)) {
             list.setHead(list.getHead().getNext());
             count++;
         }
-        count += deleteFromMiddleOrEnd(searchTerm);
-        return count;
-    }
-
-    private boolean shouldDeleteFirst(String searchTerm) {
-        return list.getHead() != null && 
-               list.getHead().getProduct().getDescription().contains(searchTerm);
-    }
-
-    private int deleteFromMiddleOrEnd(String searchTerm) {
-        int count = 0;
         Node current = list.getHead();
         while (current != null && current.getNext() != null) {
-            if (current.getNext().getProduct().getDescription().contains(searchTerm)) {
+            if (containsIgnoreCase(current.getNext().getProduct().getDescription(), searchTerm)) {
                 current.setNext(current.getNext().getNext());
                 count++;
             } else {
@@ -42,6 +35,11 @@ public class DeleteProductAction {
             }
         }
         return count;
+    }
+
+    private boolean containsIgnoreCase(String source, String targetLower) {
+        if (source == null) return false;
+        return source.toLowerCase().contains(targetLower);
     }
 
     private String buildDeleteMessage(String searchTerm, int count) {

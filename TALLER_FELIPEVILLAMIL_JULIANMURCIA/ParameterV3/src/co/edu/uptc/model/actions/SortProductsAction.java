@@ -19,7 +19,8 @@ public class SortProductsAction {
         }
         List<Node> products = extractProductsToList();
         sortProductsByName(products);
-        return buildSortedOutput(products);
+        rebuildLinkedList(products);
+        return "Productos ordenados alfabéticamente";
     }
 
     private List<Node> extractProductsToList() {
@@ -33,15 +34,18 @@ public class SortProductsAction {
     }
 
     private void sortProductsByName(List<Node> products) {
-        Collections.sort(products, (n1, n2) -> 
-            n1.getProduct().getDescription().compareTo(n2.getProduct().getDescription())
+        Collections.sort(products, (n1, n2) ->
+            n1.getProduct().getDescription().compareToIgnoreCase(n2.getProduct().getDescription())
         );
     }
 
-    private String buildSortedOutput(List<Node> products) {
-        StringBuilder result = new StringBuilder();
-        result.append(String.format("%-20s | %-12s | %s%n", "Descripción", "Precio", "Unidad"));
-        products.forEach(node -> result.append(node.getProduct()).append("\n"));
-        return result.toString();
+    private void rebuildLinkedList(List<Node> products) {
+        for (Node node : products) {
+            node.setNext(null);
+        }
+        for (int i = 0; i < products.size() - 1; i++) {
+            products.get(i).setNext(products.get(i + 1));
+        }
+        list.setHead(products.get(0));
     }
 }

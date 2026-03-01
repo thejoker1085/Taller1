@@ -46,7 +46,7 @@ public class ConsoleView implements ViewInterface {
         System.out.print("Descripción: ");
         String description = scanner.nextLine();
         System.out.print("Precio: ");
-        double price = readDoubleInput();
+        int price = (int) readIntInput();
         System.out.print("Unidad de medida: ");
         String unit = scanner.nextLine();
         presenter.addProduct(description, price, unit);
@@ -68,12 +68,12 @@ public class ConsoleView implements ViewInterface {
         System.out.println("✓ " + result + "\n");
     }
 
-    private double readDoubleInput() {
+    private int readIntInput() {
         try {
-            return Double.parseDouble(scanner.nextLine());
+            return Integer.parseInt(scanner.nextLine());
         } catch (NumberFormatException e) {
-            System.out.println("Precio inválido. Usando 0.0");
-            return 0.0;
+            System.out.println("Precio inválido. Usando 0");
+            return 0;
         }
     }
 

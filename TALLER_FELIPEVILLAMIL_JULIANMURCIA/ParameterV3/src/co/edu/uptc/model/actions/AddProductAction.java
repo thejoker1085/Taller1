@@ -10,12 +10,12 @@ public class AddProductAction {
         this.list = list;
     }
 
-    public void execute(String description, double price, String unit) {
+    public void execute(String description, int price, String unit) {
         Product product = createProduct(description, price, unit);
         list.addProduct(product);
     }
 
-    private Product createProduct(String description, double price, String unit) {
+    private Product createProduct(String description, int price, String unit) {
         return new Product(description, price, unit);
     }
 }

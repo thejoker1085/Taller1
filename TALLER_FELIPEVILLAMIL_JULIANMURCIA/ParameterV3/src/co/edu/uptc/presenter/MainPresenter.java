@@ -18,7 +18,7 @@ public class MainPresenter implements PresenterInterface {
         this.model = model;
     }
 
-    public void addProduct(String description, double price, String unit) {
+    public void addProduct(String description, int price, String unit) {
         model.addProduct(description, price, unit);
     }
 

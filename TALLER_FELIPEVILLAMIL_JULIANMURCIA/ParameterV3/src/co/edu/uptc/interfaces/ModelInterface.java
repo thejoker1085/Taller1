@@ -4,5 +4,5 @@ public interface ModelInterface {
     String listProducts();
     String sortProducts();
     String deleteProducts(String searchTerm);
-    void addProduct(String description, double price, String unit);
+    void addProduct(String description, int price, String unit);
 }
